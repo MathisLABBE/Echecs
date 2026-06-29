@@ -9,13 +9,13 @@ namespace Echecs.Controls
     {
         #region [Propriétés]
 
-        public Pion? Piece
+        public Piece? Piece
         {
-            get => (Pion?)GetValue(PieceProperty);
+            get => (Piece?)GetValue(PieceProperty);
             set => SetValue(PieceProperty, value);
         }
         public static readonly DependencyProperty PieceProperty =
-            DependencyProperty.Register(nameof(Piece), typeof(Pion), typeof(Case), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Piece), typeof(Piece), typeof(Case), new PropertyMetadata(null));
 
         public Brush Couleur
         {

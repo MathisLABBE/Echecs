@@ -1,4 +1,5 @@
 ﻿using Echecs.Enums;
+using Echecs.Pieces;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -75,10 +76,93 @@ namespace Echecs.Controls
                 Grille.Add(lListe);
             }
 
+            // Définit les joueurs
+            EnumJoueur lJoueur = Moteur.Joueur;
+            EnumJoueur lJoueurAdverse;
+            if (lJoueur == EnumJoueur.Joueur1)
+            {
+                lJoueurAdverse = EnumJoueur.Joueur2;
+            }
+            else
+            {
+                lJoueurAdverse = EnumJoueur.Joueur1;
+            }
+
             // Met en place les pions
             for (int lColonne = 0; lColonne < TAILLE_GRILLE; lColonne++)
             {
-                Case lCase = Grille[1][lColonne];
+                Case lCaseAdverse = Grille[1][lColonne];
+                lCaseAdverse.Piece = new Pion(lJoueurAdverse);
+
+                Case lCase = Grille[6][lColonne];
+                lCase.Piece = new Pion(lJoueur);
+            }
+
+            // Met en place les tours
+            List<int> lListeColonnesTour = [0, 7];
+            foreach (var lColonne in lListeColonnesTour)
+            {
+                Case lCaseAdverse = Grille[0][lColonne];
+                lCaseAdverse.Piece = new Tour(lJoueurAdverse);
+
+                Case lCase = Grille[7][lColonne];
+                lCase.Piece = new Tour(lJoueur);
+            }
+
+            // Met en place les cavaliers
+            List<int> lListeColonnesCavalier = [1, 6];
+            foreach (var lCavalier in lListeColonnesCavalier)
+            {
+                Case lCaseAdverse = Grille[0][lCavalier];
+                lCaseAdverse.Piece = new Cavalier(lJoueurAdverse);
+
+                Case lCase = Grille[7][lCavalier];
+                lCase.Piece = new Cavalier(lJoueur);
+            }
+
+            // Met en place les fous
+            List<int> lListeColonnesFou = [2, 5];
+            foreach (var lFou in lListeColonnesFou)
+            {
+                Case lCaseAdverse = Grille[0][lFou];
+                lCaseAdverse.Piece = new Fou(lJoueurAdverse);
+
+                Case lCase = Grille[7][lFou];
+                lCase.Piece = new Fou(lJoueur);
+            }
+
+            // Met en places les dames
+            if (Moteur.Joueur == EnumJoueur.Joueur1)
+            {
+                // Dames
+                Case lCaseAdverse = Grille[0][3];
+                lCaseAdverse.Piece = new Dame(lJoueurAdverse);
+
+                Case lCase = Grille[7][3];
+                lCase.Piece = new Dame(lJoueur);
+
+                // Rois
+                lCaseAdverse = Grille[0][4];
+                lCaseAdverse.Piece = new Roi(lJoueurAdverse);
+
+                lCase = Grille[7][4];
+                lCase.Piece = new Roi(lJoueur);
+            }
+            else
+            {
+                // Dames
+                Case lCaseAdverse = Grille[0][4];
+                lCaseAdverse.Piece = new Dame(lJoueurAdverse);
+
+                Case lCase = Grille[7][4];
+                lCase.Piece = new Dame(lJoueur);
+
+                // Rois
+                lCaseAdverse = Grille[0][3];
+                lCaseAdverse.Piece = new Roi(lJoueurAdverse);
+
+                lCase = Grille[7][3];
+                lCase.Piece = new Roi(lJoueur);
             }
         }
 
@@ -102,7 +186,7 @@ namespace Echecs.Controls
             }
             else
             {
-                lCouleur = Brushes.Black;
+                lCouleur = Brushes.DarkGreen;
             }
 
             return lCouleur;

@@ -9,33 +9,53 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Ressources\Images\Pieces\Blanc\CavalierBlanc.png" />
-    <None Remove="Ressources\Images\Pieces\Blanc\Foublanc.png" />
-    <None Remove="Ressources\Images\Pieces\Blanc\PionBlanc.png" />
-    <None Remove="Ressources\Images\Pieces\Blanc\ReineBlanc.png" />
     <None Remove="Ressources\Images\Pieces\Blanc\RoiBlanc.png" />
     <None Remove="Ressources\Images\Pieces\Blanc\TourBlanc.png" />
     <None Remove="Ressources\Images\Pieces\Noir\CavalierNoir.png" />
+    <None Remove="Ressources\Images\Pieces\Noir\DameNoir.png" />
     <None Remove="Ressources\Images\Pieces\Noir\FouNoir.png" />
     <None Remove="Ressources\Images\Pieces\Noir\PionNoir.png" />
-    <None Remove="Ressources\Images\Pieces\Noir\ReineNoir.png" />
     <None Remove="Ressources\Images\Pieces\Noir\RoiNoir.png" />
     <None Remove="Ressources\Images\Pieces\Noir\TourNoir.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Ressources\Images\Pieces\Blanc\CavalierBlanc.png" />
-    <Resource Include="Ressources\Images\Pieces\Blanc\Foublanc.png" />
-    <Resource Include="Ressources\Images\Pieces\Blanc\PionBlanc.png" />
-    <Resource Include="Ressources\Images\Pieces\Blanc\ReineBlanc.png" />
-    <Resource Include="Ressources\Images\Pieces\Blanc\RoiBlanc.png" />
-    <Resource Include="Ressources\Images\Pieces\Blanc\TourBlanc.png" />
-    <Resource Include="Ressources\Images\Pieces\Noir\CavalierNoir.png" />
-    <Resource Include="Ressources\Images\Pieces\Noir\FouNoir.png" />
-    <Resource Include="Ressources\Images\Pieces\Noir\PionNoir.png" />
-    <Resource Include="Ressources\Images\Pieces\Noir\ReineNoir.png" />
-    <Resource Include="Ressources\Images\Pieces\Noir\RoiNoir.png" />
-    <Resource Include="Ressources\Images\Pieces\Noir\TourNoir.png" />
+    <Resource Include="Ressources\Images\Pieces\Blanc\CavalierBlanc.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Blanc\FouBlanc.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Blanc\PionBlanc.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Blanc\DameBlanc.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Blanc\RoiBlanc.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Blanc\TourBlanc.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Noir\CavalierNoir.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Noir\DameNoir.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Noir\FouNoir.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Noir\PionNoir.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Noir\RoiNoir.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Images\Pieces\Noir\TourNoir.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

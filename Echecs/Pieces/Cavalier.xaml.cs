@@ -1,10 +1,30 @@
-﻿namespace Echecs.Pieces
+﻿using Echecs.Enums;
+
+namespace Echecs.Pieces
 {
     public partial class Cavalier : Piece
     {
-        public Cavalier()
+        #region [Constructeurs - Initialisation]
+
+        public Cavalier() : base()
         {
+            Initialisation();
+
             InitializeComponent();
         }
+
+        public Cavalier(EnumJoueur pJoueur) : base(pJoueur)
+        {
+            Initialisation();
+
+            InitializeComponent();
+        }
+
+        private void Initialisation()
+        {
+            base.CheminImage += "Cavalier" + base.CouleurImage + ".png";
+        }
+
+        #endregion
     }
 }

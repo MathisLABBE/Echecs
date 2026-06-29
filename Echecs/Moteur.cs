@@ -25,6 +25,8 @@ namespace Echecs
 
         #region [Propriétés]
 
+        public string CheminImages;
+
         public EnumJoueur Joueur;
 
         #endregion
@@ -35,6 +37,7 @@ namespace Echecs
         private Moteur()
         {
             Joueur = EnumJoueur.Joueur1;
+            CheminImages = "pack://application:,,,/Ressources/Images/Pieces/";
         }
 
         #endregion
