@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Echecs.Pieces;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -8,12 +9,19 @@ namespace Echecs.Controls
     {
         #region [Propriétés]
 
+        public Pion? Piece
+        {
+            get => (Pion?)GetValue(PieceProperty);
+            set => SetValue(PieceProperty, value);
+        }
+        public static readonly DependencyProperty PieceProperty =
+            DependencyProperty.Register(nameof(Piece), typeof(Pion), typeof(Case), new PropertyMetadata(null));
+
         public Brush Couleur
         {
             get => (Brush)GetValue(CouleurProperty);
             set => SetValue(CouleurProperty, value);
         }
-
         public static readonly DependencyProperty CouleurProperty =
             DependencyProperty.Register(nameof(Couleur), typeof(Brush), typeof(Case), new PropertyMetadata(Brushes.Blue));
 

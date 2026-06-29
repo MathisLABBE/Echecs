@@ -8,4 +8,34 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Ressources\Images\Pieces\Blanc\CavalierBlanc.png" />
+    <None Remove="Ressources\Images\Pieces\Blanc\Foublanc.png" />
+    <None Remove="Ressources\Images\Pieces\Blanc\PionBlanc.png" />
+    <None Remove="Ressources\Images\Pieces\Blanc\ReineBlanc.png" />
+    <None Remove="Ressources\Images\Pieces\Blanc\RoiBlanc.png" />
+    <None Remove="Ressources\Images\Pieces\Blanc\TourBlanc.png" />
+    <None Remove="Ressources\Images\Pieces\Noir\CavalierNoir.png" />
+    <None Remove="Ressources\Images\Pieces\Noir\FouNoir.png" />
+    <None Remove="Ressources\Images\Pieces\Noir\PionNoir.png" />
+    <None Remove="Ressources\Images\Pieces\Noir\ReineNoir.png" />
+    <None Remove="Ressources\Images\Pieces\Noir\RoiNoir.png" />
+    <None Remove="Ressources\Images\Pieces\Noir\TourNoir.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\Images\Pieces\Blanc\CavalierBlanc.png" />
+    <Resource Include="Ressources\Images\Pieces\Blanc\Foublanc.png" />
+    <Resource Include="Ressources\Images\Pieces\Blanc\PionBlanc.png" />
+    <Resource Include="Ressources\Images\Pieces\Blanc\ReineBlanc.png" />
+    <Resource Include="Ressources\Images\Pieces\Blanc\RoiBlanc.png" />
+    <Resource Include="Ressources\Images\Pieces\Blanc\TourBlanc.png" />
+    <Resource Include="Ressources\Images\Pieces\Noir\CavalierNoir.png" />
+    <Resource Include="Ressources\Images\Pieces\Noir\FouNoir.png" />
+    <Resource Include="Ressources\Images\Pieces\Noir\PionNoir.png" />
+    <Resource Include="Ressources\Images\Pieces\Noir\ReineNoir.png" />
+    <Resource Include="Ressources\Images\Pieces\Noir\RoiNoir.png" />
+    <Resource Include="Ressources\Images\Pieces\Noir\TourNoir.png" />
+  </ItemGroup>
+
 </Project>
