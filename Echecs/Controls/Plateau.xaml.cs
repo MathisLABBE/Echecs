@@ -30,9 +30,6 @@ namespace Echecs.Controls
             InitializeComponent();
 
             CreerPlateau();
-
-            Case lCase = Grille[3][3];
-            lCase.Piece = new();
         }
 
         #endregion
