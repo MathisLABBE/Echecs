@@ -26,5 +26,15 @@ namespace Echecs.Pieces
         }
 
         #endregion
+
+
+        #region [Séléctionner]
+
+        private void Piece_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Selectionner(this);
+        }
+
+        #endregion
     }
 }

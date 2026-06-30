@@ -1,4 +1,6 @@
-﻿using Echecs.Enums;
+﻿using Echecs.Controls;
+using Echecs.Enums;
+using Echecs.Pieces;
 
 namespace Echecs
 {
@@ -25,9 +27,13 @@ namespace Echecs
 
         #region [Propriétés]
 
-        public string CheminImages;
+        public string CheminImagesPieces;
+
+        public readonly List<List<Case>> Grille = new(8);
 
         public EnumJoueur Joueur;
+
+        public Piece? PieceSelectionnee;
 
         #endregion
 
@@ -36,8 +42,9 @@ namespace Echecs
 
         private Moteur()
         {
+            CheminImagesPieces = "pack://application:,,,/Ressources/Images/Pieces/";
             Joueur = EnumJoueur.Joueur1;
-            CheminImages = "pack://application:,,,/Ressources/Images/Pieces/";
+            PieceSelectionnee = null;
         }
 
         #endregion

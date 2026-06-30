@@ -11,8 +11,6 @@ namespace Echecs.Controls
 
         private const int TAILLE_GRILLE = 8;
 
-        private readonly List<List<Case>> Grille = new(TAILLE_GRILLE);
-
         #endregion
 
 
@@ -43,7 +41,7 @@ namespace Echecs.Controls
             GrillePlateau.RowDefinitions.Clear();
             GrillePlateau.ColumnDefinitions.Clear();
             GrillePlateau.Children.Clear();
-            Grille.Clear();
+            Moteur.Grille.Clear();
 
             // Initialise le grille
             for (int i = 0; i < TAILLE_GRILLE; i++)
@@ -70,7 +68,7 @@ namespace Echecs.Controls
                     GrillePlateau.Children.Add(lCase);
                 }
 
-                Grille.Add(lListe);
+                Moteur.Grille.Add(lListe);
             }
 
             // Définit les joueurs
@@ -88,10 +86,10 @@ namespace Echecs.Controls
             // Met en place les pions
             for (int lColonne = 0; lColonne < TAILLE_GRILLE; lColonne++)
             {
-                Case lCaseAdverse = Grille[1][lColonne];
+                Case lCaseAdverse = Moteur.Grille[1][lColonne];
                 lCaseAdverse.Piece = new Pion(lJoueurAdverse);
 
-                Case lCase = Grille[6][lColonne];
+                Case lCase = Moteur.Grille[6][lColonne];
                 lCase.Piece = new Pion(lJoueur);
             }
 
@@ -99,10 +97,10 @@ namespace Echecs.Controls
             List<int> lListeColonnesTour = [0, 7];
             foreach (var lColonne in lListeColonnesTour)
             {
-                Case lCaseAdverse = Grille[0][lColonne];
+                Case lCaseAdverse = Moteur.Grille[0][lColonne];
                 lCaseAdverse.Piece = new Tour(lJoueurAdverse);
 
-                Case lCase = Grille[7][lColonne];
+                Case lCase = Moteur.Grille[7][lColonne];
                 lCase.Piece = new Tour(lJoueur);
             }
 
@@ -110,10 +108,10 @@ namespace Echecs.Controls
             List<int> lListeColonnesCavalier = [1, 6];
             foreach (var lCavalier in lListeColonnesCavalier)
             {
-                Case lCaseAdverse = Grille[0][lCavalier];
+                Case lCaseAdverse = Moteur.Grille[0][lCavalier];
                 lCaseAdverse.Piece = new Cavalier(lJoueurAdverse);
 
-                Case lCase = Grille[7][lCavalier];
+                Case lCase = Moteur.Grille[7][lCavalier];
                 lCase.Piece = new Cavalier(lJoueur);
             }
 
@@ -121,10 +119,10 @@ namespace Echecs.Controls
             List<int> lListeColonnesFou = [2, 5];
             foreach (var lFou in lListeColonnesFou)
             {
-                Case lCaseAdverse = Grille[0][lFou];
+                Case lCaseAdverse = Moteur.Grille[0][lFou];
                 lCaseAdverse.Piece = new Fou(lJoueurAdverse);
 
-                Case lCase = Grille[7][lFou];
+                Case lCase = Moteur.Grille[7][lFou];
                 lCase.Piece = new Fou(lJoueur);
             }
 
@@ -132,33 +130,33 @@ namespace Echecs.Controls
             if (Moteur.Joueur == EnumJoueur.Joueur1)
             {
                 // Dames
-                Case lCaseAdverse = Grille[0][3];
+                Case lCaseAdverse = Moteur.Grille[0][3];
                 lCaseAdverse.Piece = new Dame(lJoueurAdverse);
 
-                Case lCase = Grille[7][3];
+                Case lCase = Moteur.Grille[7][3];
                 lCase.Piece = new Dame(lJoueur);
 
                 // Rois
-                lCaseAdverse = Grille[0][4];
+                lCaseAdverse = Moteur.Grille[0][4];
                 lCaseAdverse.Piece = new Roi(lJoueurAdverse);
 
-                lCase = Grille[7][4];
+                lCase = Moteur.Grille[7][4];
                 lCase.Piece = new Roi(lJoueur);
             }
             else
             {
                 // Dames
-                Case lCaseAdverse = Grille[0][4];
+                Case lCaseAdverse = Moteur.Grille[0][4];
                 lCaseAdverse.Piece = new Dame(lJoueurAdverse);
 
-                Case lCase = Grille[7][4];
+                Case lCase = Moteur.Grille[7][4];
                 lCase.Piece = new Dame(lJoueur);
 
                 // Rois
-                lCaseAdverse = Grille[0][3];
+                lCaseAdverse = Moteur.Grille[0][3];
                 lCaseAdverse.Piece = new Roi(lJoueurAdverse);
 
-                lCase = Grille[7][3];
+                lCase = Moteur.Grille[7][3];
                 lCase.Piece = new Roi(lJoueur);
             }
         }

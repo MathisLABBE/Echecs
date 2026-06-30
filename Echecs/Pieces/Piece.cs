@@ -28,6 +28,7 @@ namespace Echecs.Pieces
         {
             Joueur = EnumJoueur.Aucun;
             CheminImage = null;
+            CouleurImage = "";
         }
 
         public Piece(EnumJoueur pJoueur)
@@ -42,7 +43,22 @@ namespace Echecs.Pieces
             {
                 CouleurImage = "Noir";
             }
-            CheminImage = Moteur.CheminImages + CouleurImage + "/";
+            CheminImage = Moteur.CheminImagesPieces + CouleurImage + "/";
+        }
+
+        #endregion
+
+
+        #region [Séléctionner]
+
+        public void Selectionner(Piece pPieceSelectionnee)
+        {
+            Moteur.PieceSelectionnee = pPieceSelectionnee;
+        }
+
+        public static void AfficherCasesDisponibles()
+        {
+            return;
         }
 
         #endregion
