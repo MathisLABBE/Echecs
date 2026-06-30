@@ -11,7 +11,9 @@
              d:DesignWidth="50">
 
     <Border Background="{Binding Couleur, ElementName=Root}">
-        <ContentControl Content="{Binding Piece, ElementName=Root}" />
+        <Border Background="{Binding CouleurSurlignage, ElementName=Root}">
+            <ContentControl Content="{Binding Piece, ElementName=Root}" />
+        </Border>
     </Border>
 
 </UserControl>

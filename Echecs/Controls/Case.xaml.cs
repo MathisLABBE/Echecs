@@ -25,6 +25,14 @@ namespace Echecs.Controls
         public static readonly DependencyProperty CouleurProperty =
             DependencyProperty.Register(nameof(Couleur), typeof(Brush), typeof(Case), new PropertyMetadata(Brushes.Blue));
 
+        public Brush CouleurSurlignage
+        {
+            get => (Brush)GetValue(CouleurSurlignageProperty);
+            set => SetValue(CouleurSurlignageProperty, value);
+        }
+        public static readonly DependencyProperty CouleurSurlignageProperty =
+            DependencyProperty.Register(nameof(CouleurSurlignage), typeof(Brush), typeof(Case), new PropertyMetadata(Brushes.Transparent));
+
         #endregion
 
         #region [Constructeurs - Initialisation]

@@ -4,8 +4,8 @@
     {
         Aucun = 0,
 
-        Joueur1 = 10,
+        Blanc = 10,
 
-        Joueur2 = 20
+        Noir = 20
     }
 }

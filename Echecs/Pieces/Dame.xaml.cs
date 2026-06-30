@@ -13,7 +13,7 @@ namespace Echecs.Pieces
             InitializeComponent();
         }
 
-        public Dame(EnumJoueur pJoueur) : base(pJoueur)
+        public Dame(EnumJoueur pJoueur, List<int> pPosition) : base(pJoueur, pPosition)
         {
             Initialisation();
 
@@ -22,7 +22,7 @@ namespace Echecs.Pieces
 
         private void Initialisation()
         {
-            base.CheminImage += "Dame" + base.CouleurImage + ".png";
+            base.CheminImage += "Dame" + base.Couleur + ".png";
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using Echecs.Controls;
 using Echecs.Enums;
+using Echecs.Helper;
 using Echecs.Pieces;
 
 namespace Echecs
@@ -27,13 +28,36 @@ namespace Echecs
 
         #region [Propriétés]
 
+        // Image
         public string CheminImagesPieces;
 
-        public readonly List<List<Case>> Grille = new(8);
+        // Grille
+        public readonly List<List<Case>> Grille;
+        public int TailleGrille;
 
-        public EnumJoueur Joueur;
+        // Joueur
+        public EnumJoueur TeamJoueur;
+        public EnumJoueur JoueurActuel;
+        public EnumJoueur TeamJoueurAdverse => TeamJoueur == EnumJoueur.Blanc ? EnumJoueur.Noir : EnumJoueur.Blanc;
 
-        public Piece? PieceSelectionnee;
+        // Piece
+        private Piece? _PieceSelectionnee;
+        public Piece? PieceSelectionnee
+        {
+            get => _PieceSelectionnee;
+            set
+            {
+                PlateauHelper.CacherCasesDisponibles(Grille);
+
+                _PieceSelectionnee = value;
+
+                if (value != null)
+                {
+                    value.AfficherCasesDisponibles();
+                }
+            }
+        }
+
 
         #endregion
 
@@ -42,8 +66,18 @@ namespace Echecs
 
         private Moteur()
         {
+            // Image
             CheminImagesPieces = "pack://application:,,,/Ressources/Images/Pieces/";
-            Joueur = EnumJoueur.Joueur1;
+
+            // Grille
+            Grille = new(8);
+            TailleGrille = 8;
+
+            // Joueur
+            TeamJoueur = EnumJoueur.Blanc;
+            JoueurActuel = EnumJoueur.Blanc;
+
+            // Piece
             PieceSelectionnee = null;
         }
 

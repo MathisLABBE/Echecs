@@ -13,7 +13,7 @@ namespace Echecs.Pieces
             InitializeComponent();
         }
 
-        public Tour(EnumJoueur pJoueur) : base(pJoueur)
+        public Tour(EnumJoueur pJoueur, List<int> pPosition) : base(pJoueur, pPosition)
         {
             Initialisation();
 
@@ -22,7 +22,7 @@ namespace Echecs.Pieces
 
         private void Initialisation()
         {
-            base.CheminImage += "Tour" + base.CouleurImage + ".png";
+            base.CheminImage += "Tour" + base.Couleur + ".png";
         }
 
         #endregion

@@ -9,15 +9,23 @@ namespace Echecs.Pieces
     {
         #region [Propriétés]
 
-        public EnumJoueur Joueur { get; set; }
-
+        // Image
         public string? CheminImage { get; set; }
+        public string Couleur { get; set; }
+        public ImageSource? SourceImage => string.IsNullOrWhiteSpace(CheminImage) ? null : new BitmapImage(new Uri(CheminImage, UriKind.RelativeOrAbsolute));
 
-        public string CouleurImage { get; set; }
+        // Joueur
+        public EnumJoueur Team { get; set; }
 
+        // Moteur
         private readonly Moteur Moteur = Moteur.Instance;
 
-        public ImageSource? SourceImage => string.IsNullOrWhiteSpace(CheminImage) ? null : new BitmapImage(new Uri(CheminImage, UriKind.RelativeOrAbsolute));
+        // Position
+        public int NbDeplacement;
+        public List<int> Position;
+        public int PositionX => Position[0];
+        public int PositionY => Position[1];
+
 
         #endregion
 
@@ -26,24 +34,37 @@ namespace Echecs.Pieces
 
         public Piece()
         {
-            Joueur = EnumJoueur.Aucun;
+            // Image
             CheminImage = null;
-            CouleurImage = "";
+            Couleur = "";
+
+            // Joueur
+            Team = EnumJoueur.Aucun;
+
+            // Position
+            NbDeplacement = 0;
+            Position = [];
         }
 
-        public Piece(EnumJoueur pJoueur)
+        public Piece(EnumJoueur pJoueur, List<int> pPosition)
         {
-            Joueur = pJoueur;
+            // Joueur
+            Team = pJoueur;
 
-            if (Joueur == EnumJoueur.Joueur1)
+            // Image
+            if (Team == EnumJoueur.Blanc)
             {
-                CouleurImage = "Blanc";
+                Couleur = "Blanc";
             }
             else
             {
-                CouleurImage = "Noir";
+                Couleur = "Noir";
             }
-            CheminImage = Moteur.CheminImagesPieces + CouleurImage + "/";
+            CheminImage = Moteur.CheminImagesPieces + Couleur + "/";
+
+            // Position
+            NbDeplacement = 0;
+            Position = pPosition;
         }
 
         #endregion
@@ -53,13 +74,20 @@ namespace Echecs.Pieces
 
         public void Selectionner(Piece pPieceSelectionnee)
         {
+            if (pPieceSelectionnee.Team != Moteur.TeamJoueur)
+            {
+                return;
+            }
+
             Moteur.PieceSelectionnee = pPieceSelectionnee;
         }
 
-        public static void AfficherCasesDisponibles()
-        {
-            return;
-        }
+        #endregion
+
+
+        #region [Afficher]
+
+        public virtual void AfficherCasesDisponibles() { }
 
         #endregion
     }

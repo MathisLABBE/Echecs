@@ -13,7 +13,7 @@ namespace Echecs.Pieces
             InitializeComponent();
         }
 
-        public Cavalier(EnumJoueur pJoueur) : base(pJoueur)
+        public Cavalier(EnumJoueur pJoueur, List<int> pPosition) : base(pJoueur, pPosition)
         {
             Initialisation();
 
@@ -22,7 +22,7 @@ namespace Echecs.Pieces
 
         private void Initialisation()
         {
-            base.CheminImage += "Cavalier" + base.CouleurImage + ".png";
+            base.CheminImage += "Cavalier" + base.Couleur + ".png";
         }
 
         #endregion

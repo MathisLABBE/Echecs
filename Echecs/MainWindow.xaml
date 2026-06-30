@@ -9,8 +9,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindow, IsDesignTimeCreatable=True}"
         Title="MainWindow"
-        Height="800"
-        Width="800">
+        SizeToContent="WidthAndHeight">
 
-    <controls:Plateau />
+    <controls:Plateau Height="800" Width="800 "/>
 </Window>

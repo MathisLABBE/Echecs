@@ -13,7 +13,7 @@ namespace Echecs.Pieces
             InitializeComponent();
         }
 
-        public Fou(EnumJoueur pJoueur) : base(pJoueur)
+        public Fou(EnumJoueur pJoueur, List<int> pPosition) : base(pJoueur, pPosition)
         {
             Initialisation();
 
@@ -22,7 +22,7 @@ namespace Echecs.Pieces
 
         private void Initialisation()
         {
-            base.CheminImage += "Fou" + base.CouleurImage + ".png";
+            base.CheminImage += "Fou" + base.Couleur + ".png";
         }
 
         #endregion

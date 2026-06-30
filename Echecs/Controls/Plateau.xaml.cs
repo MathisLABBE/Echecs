@@ -1,4 +1,5 @@
 ﻿using Echecs.Enums;
+using Echecs.Helper;
 using Echecs.Pieces;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -7,14 +8,12 @@ namespace Echecs.Controls
 {
     public partial class Plateau : UserControl
     {
-        #region [Champs]
-
-        private const int TAILLE_GRILLE = 8;
-
-        #endregion
-
-
         #region [Propriétés]
+
+        public int LignePiecesAdverses = 0;
+        public int LignePieces = Moteur.Instance.TailleGrille - 1;
+        public int LignePionsAdverses = 1;
+        public int LignePions = Moteur.Instance.TailleGrille - 2;
 
         private readonly Moteur Moteur = Moteur.Instance;
 
@@ -37,6 +36,17 @@ namespace Echecs.Controls
 
         private void CreerPlateau()
         {
+            CreerGrille();
+
+            PlacerPions();
+            PlacerTours();
+            PlacerCavaliers();
+            PlacerFous();
+            PlacerDamesRois();
+        }
+
+        private void CreerGrille()
+        {
             // Supprime la grille
             GrillePlateau.RowDefinitions.Clear();
             GrillePlateau.ColumnDefinitions.Clear();
@@ -44,22 +54,24 @@ namespace Echecs.Controls
             Moteur.Grille.Clear();
 
             // Initialise le grille
-            for (int i = 0; i < TAILLE_GRILLE; i++)
+            for (int i = 0; i < Moteur.TailleGrille; i++)
             {
                 GrillePlateau.RowDefinitions.Add(new RowDefinition());
                 GrillePlateau.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
             // Complete la grille avec les cases
-            for (int lLigne = 0; lLigne < TAILLE_GRILLE; lLigne++)
+            Case lCase;
+
+            for (int lLigne = 0; lLigne < Moteur.TailleGrille; lLigne++)
             {
-                List<Case> lListe = new(TAILLE_GRILLE);
+                List<Case> lListe = new(Moteur.TailleGrille);
 
-                for (int lColonne = 0; lColonne < TAILLE_GRILLE; ++lColonne)
+                for (int lColonne = 0; lColonne < Moteur.TailleGrille; ++lColonne)
                 {
-                    Brush lCouleur = RecupererCouleurCase(lLigne, lColonne);
+                    Brush lCouleur = PlateauHelper.RecupererCouleurCase(lLigne, lColonne);
 
-                    Case lCase = new(lCouleur);
+                    lCase = new(lCouleur);
 
                     lListe.Add(lCase);
 
@@ -70,121 +82,88 @@ namespace Echecs.Controls
 
                 Moteur.Grille.Add(lListe);
             }
+        }
 
-            // Définit les joueurs
-            EnumJoueur lJoueur = Moteur.Joueur;
-            EnumJoueur lJoueurAdverse;
-            if (lJoueur == EnumJoueur.Joueur1)
+        private void PlacerPions()
+        {
+            for (int lColonne = 0; lColonne < Moteur.TailleGrille; lColonne++)
             {
-                lJoueurAdverse = EnumJoueur.Joueur2;
-            }
-            else
-            {
-                lJoueurAdverse = EnumJoueur.Joueur1;
-            }
+                Case lCaseAdverse = Moteur.Grille[LignePionsAdverses][lColonne];
+                lCaseAdverse.Piece = new Pion(Moteur.TeamJoueurAdverse, [LignePionsAdverses, lColonne]);
 
-            // Met en place les pions
-            for (int lColonne = 0; lColonne < TAILLE_GRILLE; lColonne++)
-            {
-                Case lCaseAdverse = Moteur.Grille[1][lColonne];
-                lCaseAdverse.Piece = new Pion(lJoueurAdverse);
-
-                Case lCase = Moteur.Grille[6][lColonne];
-                lCase.Piece = new Pion(lJoueur);
-            }
-
-            // Met en place les tours
-            List<int> lListeColonnesTour = [0, 7];
-            foreach (var lColonne in lListeColonnesTour)
-            {
-                Case lCaseAdverse = Moteur.Grille[0][lColonne];
-                lCaseAdverse.Piece = new Tour(lJoueurAdverse);
-
-                Case lCase = Moteur.Grille[7][lColonne];
-                lCase.Piece = new Tour(lJoueur);
-            }
-
-            // Met en place les cavaliers
-            List<int> lListeColonnesCavalier = [1, 6];
-            foreach (var lCavalier in lListeColonnesCavalier)
-            {
-                Case lCaseAdverse = Moteur.Grille[0][lCavalier];
-                lCaseAdverse.Piece = new Cavalier(lJoueurAdverse);
-
-                Case lCase = Moteur.Grille[7][lCavalier];
-                lCase.Piece = new Cavalier(lJoueur);
-            }
-
-            // Met en place les fous
-            List<int> lListeColonnesFou = [2, 5];
-            foreach (var lFou in lListeColonnesFou)
-            {
-                Case lCaseAdverse = Moteur.Grille[0][lFou];
-                lCaseAdverse.Piece = new Fou(lJoueurAdverse);
-
-                Case lCase = Moteur.Grille[7][lFou];
-                lCase.Piece = new Fou(lJoueur);
-            }
-
-            // Met en places les dames
-            if (Moteur.Joueur == EnumJoueur.Joueur1)
-            {
-                // Dames
-                Case lCaseAdverse = Moteur.Grille[0][3];
-                lCaseAdverse.Piece = new Dame(lJoueurAdverse);
-
-                Case lCase = Moteur.Grille[7][3];
-                lCase.Piece = new Dame(lJoueur);
-
-                // Rois
-                lCaseAdverse = Moteur.Grille[0][4];
-                lCaseAdverse.Piece = new Roi(lJoueurAdverse);
-
-                lCase = Moteur.Grille[7][4];
-                lCase.Piece = new Roi(lJoueur);
-            }
-            else
-            {
-                // Dames
-                Case lCaseAdverse = Moteur.Grille[0][4];
-                lCaseAdverse.Piece = new Dame(lJoueurAdverse);
-
-                Case lCase = Moteur.Grille[7][4];
-                lCase.Piece = new Dame(lJoueur);
-
-                // Rois
-                lCaseAdverse = Moteur.Grille[0][3];
-                lCaseAdverse.Piece = new Roi(lJoueurAdverse);
-
-                lCase = Moteur.Grille[7][3];
-                lCase.Piece = new Roi(lJoueur);
+                Case lCase = Moteur.Grille[LignePions][lColonne];
+                lCase.Piece = new Pion(Moteur.TeamJoueur, [LignePions, lColonne]);
             }
         }
 
-        private Brush RecupererCouleurCase(int pLigne, int pColonne)
+        private void PlacerTours()
         {
-            Brush lCouleur;
-
-            int lCouleurJoueur;
-            if (Moteur.Joueur == EnumJoueur.Joueur1)
+            List<int> lListeColonnesTour = [0, 7];
+            foreach (var lColonne in lListeColonnesTour)
             {
-                lCouleurJoueur = 0;
+                Case lCaseAdverse = Moteur.Grille[LignePiecesAdverses][lColonne];
+                lCaseAdverse.Piece = new Tour(Moteur.TeamJoueurAdverse, [LignePiecesAdverses, lColonne]);
+
+                Case lCase = Moteur.Grille[LignePieces][lColonne];
+                lCase.Piece = new Tour(Moteur.TeamJoueur, [LignePieces, lColonne]);
+            }
+        }
+
+        private void PlacerCavaliers()
+        {
+            List<int> lListeColonnesCavalier = [1, 6];
+            foreach (var lColonne in lListeColonnesCavalier)
+            {
+                Case lCaseAdverse = Moteur.Grille[LignePiecesAdverses][lColonne];
+                lCaseAdverse.Piece = new Cavalier(Moteur.TeamJoueurAdverse, [LignePiecesAdverses, lColonne]);
+
+                Case lCase = Moteur.Grille[LignePieces][lColonne];
+                lCase.Piece = new Cavalier(Moteur.TeamJoueur, [LignePieces, lColonne]);
+            }
+        }
+
+        private void PlacerFous()
+        {
+            List<int> lListeColonnesFou = [2, 5];
+            foreach (var lColonne in lListeColonnesFou)
+            {
+                Case lCaseAdverse = Moteur.Grille[LignePiecesAdverses][lColonne];
+                lCaseAdverse.Piece = new Fou(Moteur.TeamJoueurAdverse, [LignePiecesAdverses, lColonne]);
+
+                Case lCase = Moteur.Grille[LignePieces][lColonne];
+                lCase.Piece = new Fou(Moteur.TeamJoueur, [LignePieces, lColonne]);
+            }
+        }
+
+        private void PlacerDamesRois()
+        {
+            // Met en places les dames / rois
+            int lColonneDame;
+            int lColonneRoi;
+            if (Moteur.TeamJoueur == EnumJoueur.Blanc)
+            {
+                lColonneDame = 3;
+                lColonneRoi = 4;
             }
             else
             {
-                lCouleurJoueur = 1;
+                lColonneDame = 4;
+                lColonneRoi = 3;
             }
 
-            if ((pLigne + pColonne) % 2 == lCouleurJoueur)
-            {
-                lCouleur = Brushes.White;
-            }
-            else
-            {
-                lCouleur = Brushes.DarkGreen;
-            }
+            // Dames
+            Case lCaseAdverse = Moteur.Grille[LignePiecesAdverses][lColonneDame];
+            lCaseAdverse.Piece = new Dame(Moteur.TeamJoueurAdverse, [LignePiecesAdverses, lColonneDame]);
 
-            return lCouleur;
+            Case lCase = Moteur.Grille[LignePieces][lColonneDame];
+            lCase.Piece = new Dame(Moteur.TeamJoueur, [LignePieces, lColonneDame]);
+
+            // Rois
+            lCaseAdverse = Moteur.Grille[LignePiecesAdverses][lColonneRoi];
+            lCaseAdverse.Piece = new Roi(Moteur.TeamJoueurAdverse, [LignePiecesAdverses, lColonneRoi]);
+
+            lCase = Moteur.Grille[LignePieces][lColonneRoi];
+            lCase.Piece = new Roi(Moteur.TeamJoueur, [LignePieces, lColonneRoi]);
         }
 
         #endregion
