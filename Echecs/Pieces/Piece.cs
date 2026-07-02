@@ -1,4 +1,6 @@
-﻿using Echecs.Enums;
+﻿using Echecs.Controls;
+using Echecs.Enums;
+using Echecs.Helper;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,9 +25,8 @@ namespace Echecs.Pieces
         // Position
         public int NbDeplacement;
         public List<int> Position;
-        public int PositionX => Position[0];
-        public int PositionY => Position[1];
-
+        public int Ligne => Position[0];
+        public int Colonne => Position[1];
 
         #endregion
 
@@ -74,12 +75,17 @@ namespace Echecs.Pieces
 
         public void Selectionner(Piece pPieceSelectionnee)
         {
-            if (pPieceSelectionnee.Team != Moteur.TeamJoueur)
-            {
-                return;
-            }
+            //Moteur.PieceSelectionnee = pPieceSelectionnee;
+        }
 
-            Moteur.PieceSelectionnee = pPieceSelectionnee;
+        #endregion
+
+
+        #region [Récupérer]
+
+        public virtual List<Case> RecupererListeCasesDisponibles()
+        {
+            return [];
         }
 
         #endregion
@@ -87,7 +93,16 @@ namespace Echecs.Pieces
 
         #region [Afficher]
 
-        public virtual void AfficherCasesDisponibles() { }
+        public void AfficherCasesDisponibles()
+        {
+            List<List<Case>> lGrille = Moteur.Grille;
+            List<Case> lListeCasesDisponibles = RecupererListeCasesDisponibles();
+
+            foreach (var lCaseDisponible in lListeCasesDisponibles)
+            {
+                PlateauHelper.SurlignerCase(Moteur.Grille, lCaseDisponible.Ligne, lCaseDisponible.Colonne);
+            }
+        }
 
         #endregion
     }

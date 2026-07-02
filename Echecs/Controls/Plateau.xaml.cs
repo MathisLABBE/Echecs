@@ -43,6 +43,9 @@ namespace Echecs.Controls
             PlacerCavaliers();
             PlacerFous();
             PlacerDamesRois();
+
+            Case lCase = Moteur.Grille[3][3];
+            lCase.Piece = new Roi(Moteur.TeamJoueur, [3, 3]);
         }
 
         private void CreerGrille()
@@ -71,7 +74,7 @@ namespace Echecs.Controls
                 {
                     Brush lCouleur = PlateauHelper.RecupererCouleurCase(lLigne, lColonne);
 
-                    lCase = new(lCouleur);
+                    lCase = new([lLigne, lColonne], lCouleur);
 
                     lListe.Add(lCase);
 

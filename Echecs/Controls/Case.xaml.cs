@@ -9,6 +9,8 @@ namespace Echecs.Controls
     {
         #region [Propriétés]
 
+        private static Moteur Moteur => Moteur.Instance;
+
         public Piece? Piece
         {
             get => (Piece?)GetValue(PieceProperty);
@@ -33,6 +35,11 @@ namespace Echecs.Controls
         public static readonly DependencyProperty CouleurSurlignageProperty =
             DependencyProperty.Register(nameof(CouleurSurlignage), typeof(Brush), typeof(Case), new PropertyMetadata(Brushes.Transparent));
 
+        // Position
+        public List<int> Position;
+        public int Ligne => Position[0];
+        public int Colonne => Position[1];
+
         #endregion
 
         #region [Constructeurs - Initialisation]
@@ -40,11 +47,24 @@ namespace Echecs.Controls
         public Case()
         {
             InitializeComponent();
+
+            Position = [];
         }
 
-        public Case(Brush pCouleur) : this()
+        public Case(List<int> pPosition, Brush pCouleur) : this()
         {
             Couleur = pCouleur;
+            Position = pPosition;
+        }
+
+        #endregion
+
+
+        #region [Séléctionner]
+
+        private void Case_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Moteur.CaseSelectionnee = this;
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using Echecs.Controls;
 using Echecs.Enums;
-using System.Windows.Media;
+using Echecs.Helper;
 
 namespace Echecs.Pieces
 {
@@ -44,24 +44,43 @@ namespace Echecs.Pieces
             Selectionner(this);
         }
 
-        public override void AfficherCasesDisponibles()
-        {
-            List<List<Case>> lGrille = Moteur.Grille;
+        #endregion
 
-            if (Team == Moteur.TeamJoueur)
+
+        #region [Récupérer]
+
+        public override List<Case> RecupererListeCasesDisponibles()
+        {
+            List<Case> lListeCasesDisponibles = [];
+            List<List<int>> lListeCoordonneesACheck = [[Ligne - 1, Colonne]];
+            if (NbDeplacement < 1)
             {
-                if (lGrille[PositionX - 1][PositionY].Piece == null)
+                lListeCoordonneesACheck.Add([Ligne - 2, Colonne]);
+            }
+
+            foreach (var lCoordonee in lListeCoordonneesACheck)
+            {
+                Case? lCaseACheck = PlateauHelper.RecupererCase(Moteur.Grille, lCoordonee);
+
+                if (lCaseACheck == null)
                 {
-                    lGrille[PositionX - 1][PositionY].CouleurSurlignage = new SolidColorBrush(Color.FromArgb(220, 128, 128, 128));
+                    continue;
                 }
-                if (NbDeplacement == 0)
+
+                if (lCaseACheck.Piece != null)
                 {
-                    if (lGrille[PositionX - 2][PositionY].Piece == null)
+                    if (lCaseACheck.Piece.Team != Moteur.TeamJoueur)
                     {
-                        lGrille[PositionX - 2][PositionY].CouleurSurlignage = new SolidColorBrush(Color.FromArgb(220, 128, 128, 128));
+                        lListeCasesDisponibles.Add(lCaseACheck);
                     }
                 }
+                else
+                {
+                    lListeCasesDisponibles.Add(lCaseACheck);
+                }
             }
+
+            return lListeCasesDisponibles;
         }
 
         #endregion

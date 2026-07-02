@@ -41,6 +41,37 @@ namespace Echecs
         public EnumJoueur TeamJoueurAdverse => TeamJoueur == EnumJoueur.Blanc ? EnumJoueur.Noir : EnumJoueur.Blanc;
 
         // Piece
+        public Case? CaseSelectionnee
+        {
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+
+                if (value.Piece == PieceSelectionnee)
+                {
+                    PieceSelectionnee = null;
+                    PlateauHelper.CacherCasesDisponibles(Grille);
+                    return;
+                }
+
+                if (PieceSelectionnee != null)
+                {
+                    if (PieceSelectionnee.RecupererListeCasesDisponibles().Contains(value))
+                    {
+                        PlateauHelper.DeplacerPiece(Grille, PieceSelectionnee, value);
+                        PieceSelectionnee = null;
+                        PlateauHelper.CacherCasesDisponibles(Grille);
+                        return;
+                    }
+                }
+
+                PieceSelectionnee = value.Piece;
+            }
+        }
+
         private Piece? _PieceSelectionnee;
         public Piece? PieceSelectionnee
         {
@@ -48,6 +79,14 @@ namespace Echecs
             set
             {
                 PlateauHelper.CacherCasesDisponibles(Grille);
+
+                if (value != null)
+                {
+                    if (value.Team != TeamJoueur)
+                    {
+                        return;
+                    }
+                }
 
                 _PieceSelectionnee = value;
 
