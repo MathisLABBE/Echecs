@@ -77,15 +77,12 @@ namespace Echecs.Pieces
 
                 if (lCaseACheck.Piece != null)
                 {
-                    if (lCaseACheck.Piece.Team != Moteur.TeamJoueur)
+                    if (lCaseACheck.Piece.Team == Moteur.JoueurActuel)
                     {
-                        lListeCasesDisponibles.Add(lCaseACheck);
+                        continue;
                     }
                 }
-                else
-                {
-                    lListeCasesDisponibles.Add(lCaseACheck);
-                }
+                lListeCasesDisponibles.Add(lCaseACheck);
             }
 
             return lListeCasesDisponibles;

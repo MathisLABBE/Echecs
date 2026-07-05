@@ -43,9 +43,6 @@ namespace Echecs.Controls
             PlacerCavaliers();
             PlacerFous();
             PlacerDamesRois();
-
-            Case lCase = Moteur.Grille[3][3];
-            lCase.Piece = new Roi(Moteur.TeamJoueur, [3, 3]);
         }
 
         private void CreerGrille()

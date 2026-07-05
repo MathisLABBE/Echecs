@@ -52,13 +52,51 @@ namespace Echecs.Pieces
         public override List<Case> RecupererListeCasesDisponibles()
         {
             List<Case> lListeCasesDisponibles = [];
-            List<List<int>> lListeCoordonneesACheck = [[Ligne - 1, Colonne]];
-            if (NbDeplacement < 1)
+            List<List<int>> lListeCoordonneesACheck = [];
+            List<List<int>> lListeCoordonneesACheckDiagonale = [];
+
+            // Récupère les coordonées à check
+            if (Team == Moteur.TeamJoueur)
             {
-                lListeCoordonneesACheck.Add([Ligne - 2, Colonne]);
+                lListeCoordonneesACheck.Add([Ligne - 1, Colonne]);
+                if (NbDeplacement < 1)
+                {
+                    lListeCoordonneesACheck.Add([Ligne - 2, Colonne]);
+                }
+
+                lListeCoordonneesACheckDiagonale.Add([Ligne - 1, Colonne - 1]);
+                lListeCoordonneesACheckDiagonale.Add([Ligne - 1, Colonne + 1]);
+            }
+            else
+            {
+                lListeCoordonneesACheck.Add([Ligne + 1, Colonne]);
+                if (NbDeplacement < 1)
+                {
+                    lListeCoordonneesACheck.Add([Ligne + 2, Colonne]);
+                }
+
+                lListeCoordonneesACheckDiagonale.Add([Ligne + 1, Colonne - 1]);
+                lListeCoordonneesACheckDiagonale.Add([Ligne + 1, Colonne + 1]);
             }
 
+            // Cases devant
             foreach (var lCoordonee in lListeCoordonneesACheck)
+            {
+                Case? lCaseACheck = PlateauHelper.RecupererCase(Moteur.Grille, lCoordonee);
+
+                if (lCaseACheck == null)
+                {
+                    continue;
+                }
+
+                if (lCaseACheck.Piece == null)
+                {
+                    lListeCasesDisponibles.Add(lCaseACheck);
+                }
+            }
+
+            // Cases sur le côté
+            foreach (var lCoordonee in lListeCoordonneesACheckDiagonale)
             {
                 Case? lCaseACheck = PlateauHelper.RecupererCase(Moteur.Grille, lCoordonee);
 
@@ -69,18 +107,40 @@ namespace Echecs.Pieces
 
                 if (lCaseACheck.Piece != null)
                 {
-                    if (lCaseACheck.Piece.Team != Moteur.TeamJoueur)
+                    if (lCaseACheck.Piece.Team == Moteur.JoueurAdverse)
                     {
                         lListeCasesDisponibles.Add(lCaseACheck);
                     }
                 }
-                else
-                {
-                    lListeCasesDisponibles.Add(lCaseACheck);
-                }
             }
 
             return lListeCasesDisponibles;
+        }
+
+        #endregion
+
+
+        #region [Changer Pion]
+
+        public bool EstSurDerniereLigne()
+        {
+            int lLigneDeFond;
+
+            if (Team == Moteur.TeamJoueur)
+            {
+                lLigneDeFond = 0;
+            }
+            else
+            {
+                lLigneDeFond = 7;
+            }
+
+            if (Ligne == lLigneDeFond)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

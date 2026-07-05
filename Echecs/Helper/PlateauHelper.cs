@@ -178,8 +178,16 @@ namespace Echecs.Helper
                 return;
             }
 
-            pCaseDestination.Piece = pPieceADeplacer;
             pPieceADeplacer.Position = pCaseDestination.Position;
+            if (pPieceADeplacer is Pion pPion)
+            {
+                if (pPion.EstSurDerniereLigne())
+                {
+                    pPieceADeplacer = new Dame(pPieceADeplacer.Team, pPieceADeplacer.Position);
+                }
+            }
+
+            pCaseDestination.Piece = pPieceADeplacer;
             pPieceADeplacer.NbDeplacement++;
             lCaseSource.Piece = null;
         }

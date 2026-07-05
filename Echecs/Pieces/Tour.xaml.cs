@@ -100,7 +100,7 @@ namespace Echecs.Pieces
                 {
                     if (lCaseDispo.Piece != null)
                     {
-                        if (lCaseDispo.Piece.Team == Moteur.TeamJoueur)
+                        if (lCaseDispo.Piece.Team == Moteur.JoueurActuel)
                         {
                             continue;
                         }
