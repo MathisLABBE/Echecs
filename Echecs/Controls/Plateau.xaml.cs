@@ -1,8 +1,10 @@
 ﻿using Echecs.Enums;
 using Echecs.Helper;
 using Echecs.Pieces;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Echecs.Controls
 {
@@ -27,6 +29,8 @@ namespace Echecs.Controls
             InitializeComponent();
 
             CreerPlateau();
+
+            Moteur.PromotionDemandee = AfficherChoixPromotion;
         }
 
         #endregion
@@ -164,6 +168,96 @@ namespace Echecs.Controls
 
             lCase = Moteur.Grille[LignePieces][lColonneRoi];
             lCase.Piece = new Roi(Moteur.TeamJoueur, [LignePieces, lColonneRoi]);
+        }
+
+        #endregion
+
+
+        #region [Promotion Pion]
+
+        private Case? _CasePromotion;
+
+        private void AfficherChoixPromotion(Case pCase)
+        {
+            _CasePromotion = pCase;
+
+            StackPanel lPanel = new()
+            {
+                Orientation = Orientation.Vertical
+            };
+
+            AjouterBoutonPromotion(lPanel, EnumPromotion.Dame);
+            AjouterBoutonPromotion(lPanel, EnumPromotion.Tour);
+            AjouterBoutonPromotion(lPanel, EnumPromotion.Fou);
+            AjouterBoutonPromotion(lPanel, EnumPromotion.Cavalier);
+
+            MenuPromotion.Child = lPanel;
+            CalquePromotion.Visibility = Visibility.Visible;
+
+            double lTailleCase = ActualWidth / Moteur.TailleGrille;
+
+            Canvas.SetLeft(MenuPromotion, pCase.Colonne * lTailleCase);
+
+            double lTop = pCase.Ligne == 0
+                ? 0
+                : (Moteur.TailleGrille - 4) * lTailleCase;
+
+            Canvas.SetTop(MenuPromotion, lTop);
+        }
+
+        private void AjouterBoutonPromotion(StackPanel pPanel, EnumPromotion pPromotion)
+        {
+            if (_CasePromotion?.Piece == null)
+            {
+                return;
+            }
+
+            string lCouleur = _CasePromotion.Piece.Couleur;
+            string lNomPiece = pPromotion.ToString();
+            string lCheminImage = $"{Moteur.CheminImagesPieces}{lCouleur}/{lNomPiece}{lCouleur}.png";
+
+            Button lBouton = new()
+            {
+                Tag = pPromotion,
+                Width = 70,
+                Height = 70,
+                Padding = new Thickness(4),
+                Content = new Image
+                {
+                    Source = new BitmapImage(new Uri(lCheminImage, UriKind.RelativeOrAbsolute)),
+                    Stretch = Stretch.Uniform
+                }
+            };
+
+            lBouton.Click += ChoisirPromotion_Click;
+            pPanel.Children.Add(lBouton);
+        }
+
+        private void ChoisirPromotion_Click(object sender, RoutedEventArgs e)
+        {
+            if (_CasePromotion?.Piece == null || sender is not Button lBouton)
+            {
+                return;
+            }
+
+            EnumPromotion lPromotion = (EnumPromotion)lBouton.Tag;
+            EnumJoueur lTeam = _CasePromotion.Piece.Team;
+            List<int> lPosition = _CasePromotion.Position;
+
+            _CasePromotion.Piece = lPromotion switch
+            {
+                EnumPromotion.Dame => new Dame(lTeam, lPosition),
+                EnumPromotion.Tour => new Tour(lTeam, lPosition),
+                EnumPromotion.Fou => new Fou(lTeam, lPosition),
+                EnumPromotion.Cavalier => new Cavalier(lTeam, lPosition),
+                _ => new Dame(lTeam, lPosition)
+            };
+
+            CalquePromotion.Visibility = Visibility.Collapsed;
+            _CasePromotion = null;
+
+            Moteur.PromotionEnCours = false;
+            Moteur.JoueurActuel = Moteur.JoueurAdverse;
         }
 
         #endregion

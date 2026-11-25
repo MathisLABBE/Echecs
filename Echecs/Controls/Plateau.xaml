@@ -9,5 +9,21 @@
              d:DesignHeight="600"
              d:DesignWidth="600">
 
-    <Grid x:Name="GrillePlateau" />
+    <Grid>
+        <Grid x:Name="GrillePlateau" />
+
+        <Canvas
+            Panel.ZIndex="10"
+            Visibility="Collapsed"
+            x:Name="CalquePromotion">
+
+            <Border
+                Background="White"
+                BorderBrush="#999"
+                BorderThickness="1"
+                CornerRadius="3"
+                Padding="4"
+                x:Name="MenuPromotion" />
+        </Canvas>
+    </Grid>
 </UserControl>

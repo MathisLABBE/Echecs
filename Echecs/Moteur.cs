@@ -51,6 +51,11 @@ namespace Echecs
                     return;
                 }
 
+                if (PromotionEnCours)
+                {
+                    return;
+                }
+
                 if (value.Piece == PieceSelectionnee)
                 {
                     PieceSelectionnee = null;
@@ -65,6 +70,14 @@ namespace Echecs
                         PlateauHelper.DeplacerPiece(Grille, PieceSelectionnee, value);
                         PieceSelectionnee = null;
                         PlateauHelper.CacherCasesDisponibles(Grille);
+
+                        if (value.Piece is Pion pPion && pPion.EstSurDerniereLigne())
+                        {
+                            PromotionEnCours = true;
+                            PromotionDemandee?.Invoke(value);
+                            return;
+                        }
+
                         JoueurActuel = JoueurAdverse;
                         return;
                     }
@@ -98,6 +111,9 @@ namespace Echecs
             }
         }
 
+        public Action<Case>? PromotionDemandee;
+
+        public bool PromotionEnCours;
 
         #endregion
 
